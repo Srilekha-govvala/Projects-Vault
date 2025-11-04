@@ -8,7 +8,7 @@ This project showcases form validation, safe API calls, and token handling — f
 ## 🚀 Tech Stack
 - **React JS (Hooks + Functional Components)**
 - **Axios** for secure RESTful API communication
-- **Tailwind CSS** for clean, responsive UI
+- **Bootstrap** for clean, responsive UI
 - **Session Storage** for short-term JWT handling
 
 ---
