@@ -1,0 +1,26 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "testuser@example.com",
+      "password": "password123",
+      "token": "jwt12345abc"
+    },
+    {
+      "id": "2",
+      "email": "admin@example.com",
+      "password": "admin12345",
+      "token": "jwt67890xyz"
+    },
+    {
+      "id": "9532",
+      "email": "srilekhag441@gmail.com",
+      "password": "wasdrfthgyjkl"
+    },
+    {
+      "id": "9be5",
+      "email": "testuser@example.com",
+      "password": "password123"
+    }
+  ]
+}
