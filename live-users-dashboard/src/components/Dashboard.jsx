@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function Dashboard() {
     const [users, setUsers] = useState([])//sores user data
     const [filtered, setFiltered] = useState([]);//sore search results
@@ -25,9 +27,17 @@ export default function Dashboard() {
             setUsers(result)
             setFiltered(result)
             setCurrentPage(1)
+            toast.success("✅ Users loaded successfully!")
         }
-        catch (e) {
-            console.log("Failed to fetch the users: ", e)
+        catch (err) {
+            // console.log("Failed to fetch the users: ", e)
+            if (err.response) {
+                toast.error(`❌ Server Error: ${err.response.status}`);
+            } else if (err.request) {
+                toast.error("⚠️ Network Error! Please check your connection.");
+            } else {
+                toast.error("❌ Unexpected Error occurred.");
+            }
         }
         finally {
             setLoading(false)
@@ -49,7 +59,7 @@ export default function Dashboard() {
     const indexOfFirst = indexOfLast - usersPage;
     const currentUsers = filtered.slice(indexOfFirst, indexOfLast);
     const totalPages = Math.ceil(filtered.length / usersPage)
-    console.log(totalPages)
+    // console.log(totalPages)
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
@@ -67,7 +77,7 @@ export default function Dashboard() {
                     type="text"
                     placeholder="search by name..." className="px-4 py-2 rounded text-black w-64 shadow" onChange={handlesearch} />
                 <button onClick={fetchUsers} className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-2 rounded">
-                    Refresh
+                    Refresh 🔄
                 </button>
             </div>
             {/* Display Section */}
@@ -95,6 +105,22 @@ export default function Dashboard() {
                         </div>
                     </>
             }
+            {/* Scroll to top */}
+            <div className="flex justify-center mt-10">
+                <button
+                    onClick={() => topRef.current?.scrollIntoView({ behavior: "smooth" })}
+                    className="bg-pink-500 hover:bg-pink-600 px-4 py-2 rounded-full shadow-lg">
+                    ⬆️ Scroll to Top
+                </button>
+            </div>
+            {/* Toast Notifications */}
+            <ToastContainer
+                position="top-right"
+                autoClose={2500}
+                hideProgressBar={false}
+                newestOnTop
+                theme="colored"
+            />
         </div>
     )
 }
