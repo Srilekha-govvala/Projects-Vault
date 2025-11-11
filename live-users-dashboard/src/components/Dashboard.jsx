@@ -5,6 +5,12 @@ export default function Dashboard() {
     const [filtered, setFiltered] = useState([]);//sore search results
     const [loading, setLoading] = useState(true)//loading state
     const searchRef = useRef(null)//ref for search input
+    const topRef = useRef(null)
+
+    //pagination
+    const [currentPage, setCurrentPage] = useState(1);
+    const usersPage = 3;
+
     useEffect(() => {
         fetchUsers()
         searchRef.current?.focus()//auto focus input when page loads
@@ -18,6 +24,7 @@ export default function Dashboard() {
             console.log(result)
             setUsers(result)
             setFiltered(result)
+            setCurrentPage(1)
         }
         catch (e) {
             console.log("Failed to fetch the users: ", e)
@@ -35,9 +42,21 @@ export default function Dashboard() {
         }
         const result = users.filter((u) => u.name.toLowerCase().includes(query));
         setFiltered(result);
+        setCurrentPage(1)
+    }
+    //pagination logic
+    const indexOfLast = currentPage * usersPage;
+    const indexOfFirst = indexOfLast - usersPage;
+    const currentUsers = filtered.slice(indexOfFirst, indexOfLast);
+    const totalPages = Math.ceil(filtered.length / usersPage)
+    console.log(totalPages)
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+        topRef.current.scrollIntoView({ behavior: "smooth" })
     }
     return (
-        <div className="min-h-screen bg-gradient-to-br from-indigo-500 to-cyan-600 p-8 text-white">
+        <div ref={topRef} className="min-h-screen bg-gradient-to-br from-indigo-500 to-cyan-600 p-8 text-white">
             <h1 className="text-3xl font-bold mb-6 text-center">
                 👩‍💻 Live Users Dashboard
             </h1>
@@ -55,16 +74,26 @@ export default function Dashboard() {
             {loading ?
                 <p className="text-center text-lg">⏳ Loading users...</p>
                 : filtered.length === 0 ? <p className="text-center text-lg">😔 No users found</p> :
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {filtered.map((fd) => (
-                            <div className="bg-white/10 p-5 rounded-lg shadow-lg hover:scale-[1.02] transition-transform duration-300" key={fd.id}>
-                                <p className="text-xl font-bold md-1">{fd.name}</p>
-                                <p className="text-white/90">{fd.email}</p>
-                                <p className="text-white/70">{fd.address.city}</p>
-                                <p className="text-sm text-white/50 mt-2">company : {fd.company.name}</p>
-                            </div>
-                        ))}
-                    </div>
+                    <>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {currentUsers.map((fd) => (
+                                <div className="bg-white/10 p-5 rounded-lg shadow-lg hover:scale-[1.02] transition-transform duration-300" key={fd.id}>
+                                    <p className="text-xl font-bold md-1">{fd.name}</p>
+                                    <p className="text-white/90">{fd.email}</p>
+                                    <p className="text-white/70">{fd.address.city}</p>
+                                    <p className="text-sm text-white/50 mt-2">Company : {fd.company.name}</p>
+                                </div>
+                            ))}
+                        </div>
+                        {/* Pagination */}
+                        <div className="flex justify-center mt-8 gap-2 flex-wrap">
+                            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                                <button key={page} onClick={() => handlePageChange(page)}
+                                    className={`px-4 py-2 rounded ${currentPage === page ? "bg-white text-black font-bold" : "bg-white/20 hover:bg-white/30"}`}>
+                                    {page}
+                                </button>))}
+                        </div>
+                    </>
             }
         </div>
     )
