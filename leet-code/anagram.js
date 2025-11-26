@@ -4,5 +4,5 @@ var isAnagram = function(s, t) {
     let arr2=t.split("").sort().join("");
     return arr1===arr2
 };
-console.log(isAnagram(tata,atta));
-console.log(isAnagram(akka,bakka))
+console.log(isAnagram("tata","atta"));
+console.log(isAnagram("akka","bakka"))
