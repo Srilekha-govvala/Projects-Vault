@@ -25,4 +25,34 @@ let sen="race a car";
 console.log(isCheckPalindrome(s));
 console.log(myPalindromeCheck(num));
 console.log(isCheckPalindrome(str));
-console.log(myPalindromeCheck(sen))
+console.log(myPalindromeCheck(sen));
+
+// two pointer approach
+var isPalindrome = function(s) {
+    s = s.toLowerCase();
+    let left = 0;
+    let right = s.length - 1;
+
+    while (left < right) {
+
+        // Skip non-alphanumeric on left
+        while (left < right && !(/[a-z0-9]/.test(s[left]))) {
+            left++;
+        }
+
+        // Skip non-alphanumeric on right
+        while (left < right && !(/[a-z0-9]/.test(s[right]))) {
+            right--;
+        }
+
+        // Compare characters
+        if (s[left] !== s[right]) {
+            return false;
+        }
+
+        left++;
+        right--;
+    }
+
+    return true;
+};
