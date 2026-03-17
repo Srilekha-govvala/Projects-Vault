@@ -1,26 +1,29 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
+import { statsData, weeklyActivity, languageData, recentActivity } from '../../data/mockData'
 
 const initialState = {
-  data: [],
-  loading: false,
-  error: null,
-};
+  stats: statsData,
+  weeklyActivity: weeklyActivity,
+  languages: languageData,
+  activity: recentActivity,
+  searchQuery: '',
+  currentPage: 1,
+  itemsPerPage: 4,
+}
 
 const dashboardSlice = createSlice({
   name: 'dashboard',
   initialState,
   reducers: {
-    setData: (state, action) => {
-      state.data = action.payload;
+    setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload
+      state.currentPage = 1
     },
-    setLoading: (state, action) => {
-      state.loading = action.payload;
-    },
-    setError: (state, action) => {
-      state.error = action.payload;
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload
     },
   },
-});
+})
 
-export const { setData, setLoading, setError } = dashboardSlice.actions;
-export default dashboardSlice.reducer;
+export const { setSearchQuery, setCurrentPage } = dashboardSlice.actions
+export default dashboardSlice.reducer
