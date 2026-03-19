@@ -1,5 +1,6 @@
 import Sidebar from './components/Sidebar'
 import Navbar from './components/Navbar'
+import Dashboard from './pages/Dashboard'
 
 export default function App() {
   return (
@@ -8,7 +9,7 @@ export default function App() {
       <div className="flex flex-col flex-1">
         <Navbar />
         <main className="flex-1 p-6">
-          <p className="text-gray-400 text-sm">Dashboard content coming soon...</p>
+          <Dashboard />
         </main>
       </div>
     </div>

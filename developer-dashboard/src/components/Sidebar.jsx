@@ -23,7 +23,7 @@ export default function Sidebar() {
                         <span>{item.label}</span>
                     </button>
                 ))}
-            </nav>
+            </nav><br/>
             <div className="mt-auto px-2">
                 <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white text-xs font-bold">
