@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux'
 import StatsCard from '../components/StatsCard'
+import ActivityLineChart from '../components/LineChart'
+import DonutChart from '../components/DonutChart'
 
 export default function Dashboard() {
   const stats = useSelector(state => state.dashboard.stats)
@@ -21,6 +23,15 @@ export default function Dashboard() {
             icon={stat.icon}
           />
         ))}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="lg:col-span-2">
+          <ActivityLineChart />
+        </div>
+        <div className="lg:col-span-1">
+          <DonutChart />
+        </div>
       </div>
     </div>
   )
