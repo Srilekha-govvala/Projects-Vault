@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux'
 import StatsCard from '../components/StatsCard'
 import ActivityLineChart from '../components/LineChart'
 import DonutChart from '../components/DonutChart'
+import ActivityTable from '../components/ActivityTable'
 
 export default function Dashboard() {
   const stats = useSelector(state => state.dashboard.stats)
@@ -33,6 +34,8 @@ export default function Dashboard() {
           <DonutChart />
         </div>
       </div>
+
+      <ActivityTable />
     </div>
   )
 }
