@@ -1,8 +1,9 @@
+import { NavLink } from "react-router-dom"
 const navItems = [
-    { label: "Dashboard", icon: "📊" },
-    { label: "Repositories", icon: "📁" },
-    { label: "Activity", icon: "📈" },
-    { label: "Settings", icon: "⚙️" },
+    { label: "Dashboard", icon: "📊", path: '/' },
+    { label: "Repositories", icon: "📁", path: '/repositories' },
+    { label: "Activity", icon: "📈", path: '/activity' },
+    { label: "Settings", icon: "⚙️", path: '/settings' },
 ]
 
 export default function Sidebar() {
@@ -15,15 +16,21 @@ export default function Sidebar() {
                 <span className="text-gray-900  text-white font-semibold text-sm tracking-wide">DevDashboard</span>
             </div>
             <nav className="flex flex-col gap-1">
-                {navItems.map((item, i) => (
-                    <button key={i}
-                        className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all ${i == 0 ? 'bg-indigo-500/20 text-indigo-600 text-indigo-400 font-medium' : 'text-gray-600 text-gray-400 hover:bg-gray-100 hover:bg-gray-800 hover:text-gray-900 hover:text-white'} `}
+                {navItems.map((item) => (
+                    <NavLink
+                        key={item.path}
+                        to={item.path}
+                        end={item.path === '/'}
+                        className={({ isActive }) => `flex items-center 
+                    gap-3 px-3 py-2.5 rounded-lg text-sm transition-all ${isActive ? 'bg-indigo-500/20 text-indigo-400 font-medium'
+                                : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+                            }`}
                     >
                         <span>{item.icon}</span>
                         <span>{item.label}</span>
-                    </button>
+                    </NavLink>
                 ))}
-            </nav><br/>
+            </nav><br />
             <div className="mt-auto px-2">
                 <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white text-xs font-bold">
